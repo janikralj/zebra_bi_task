@@ -23,30 +23,26 @@ export class PricingPage {
         await this.page.goto('/pricing/');
     }
 
+    async validatePricingGroup(groupLocator: Locator, headingText: string) {
+        // Validate group is visible
+        await expect(groupLocator, `${headingText} group should be visible.`).toBeVisible();
+
+        // Validate heading inside group
+        await expect(groupLocator.getByRole('heading', { name: headingText, exact: true }), `${headingText} group should have heading.`).toBeVisible();
+
+        // Validate "See the Pricing Plans" button inside group
+        await expect(groupLocator.getByRole('link', { name: 'See the Pricing Plans', exact: true }), `${headingText} group should have a "See the Pricing Plans" button.`).toBeVisible();
+    }
+
     async validateForPowerBiGroup() {
-        // validate "Zebra Bi for Power Bi" group
-        await expect(this.forPowerBiGroup, 'Zebra Bi for Power Bi group should be visible.').toBeVisible();
-        // validate "Zebra Bi for Power Bi" have heading in section
-        await expect(this.forPowerBiGroup.getByRole('heading', { name: 'Zebra BI for Power BI', exact: true }), 'For Power Bi group, should have heading').toBeVisible();
-        // validate "Zebra Bi for Power Bi", have see the pricing plans in section
-        await expect(this.forPowerBiGroup.getByRole('link', { name: 'See the Pricing Plans', exact: true }), 'For Power Bi group, should have a "See the Pricing Plans" button').toBeVisible();
+        await this.validatePricingGroup(this.forPowerBiGroup, 'Zebra BI for Power BI');
     }
 
     async validateForOfficeGroup() {
-        // validate "Zebra Bi for Office" group
-        await expect(this.forOfficeGroup, 'Zebra Bi for Office group should be visible.').toBeVisible();
-        // validate "Zebra Bi for Office" have heading in section
-        await expect(this.forOfficeGroup.getByRole('heading', { name: 'Zebra BI for Office', exact: true }), 'For Office group, should have heading').toBeVisible();
-        // validate "Zebra Bi for Power Bi", have get started for free button in section
-        await expect(this.forOfficeGroup.getByRole('link', { name: 'See the Pricing Plans', exact: true }), 'For Office group, should have a "See the Pricing Plans" button').toBeVisible();
+        await this.validatePricingGroup(this.forOfficeGroup, 'Zebra BI for Office');
     }
 
     async validateAiGroup() {
-        // validate "Zebra Ai group
-        await expect(this.aiGroup, 'Zebra Ai group should be visible.').toBeVisible();
-        // validate "Zebra Ai" have heading in section
-        await expect(this.aiGroup.getByRole('heading', { name: 'Zebra AI', exact: true }), 'Ai group, should have heading').toBeVisible();
-        // validate "Zebra Ai", have get started for free button in section
-        await expect(this.aiGroup.getByRole('link', { name: 'See the Pricing Plans', exact: true }), 'Ai group, should have a "See the Pricing Plans" button').toBeVisible();
+        await this.validatePricingGroup(this.aiGroup, 'Zebra AI');
     }
 }
